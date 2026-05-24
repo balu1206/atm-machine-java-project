@@ -13,6 +13,8 @@ public class DBConnection {
 	public static Connection getConnection() {
 		
 		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			
 			Connection connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
 			
 			System.out.println("Database Connected Successfully");
