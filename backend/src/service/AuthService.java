@@ -9,5 +9,12 @@ public class AuthService {
 		return accountDAO.validateLogin(accountNumber, pin);
 	}
 	
+	public double getBalance(String accountNumber) {
+		return accountDAO.getBalance(accountNumber);
+	}
+	
+	public boolean withdraw(String accountNumber, double amount) {
+		return accountDAO.withdrawAmount(accountNumber, amount);
+	}
 
 }
