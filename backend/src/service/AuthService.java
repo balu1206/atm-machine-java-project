@@ -16,5 +16,9 @@ public class AuthService {
 	public boolean withdraw(String accountNumber, double amount) {
 		return accountDAO.withdrawAmount(accountNumber, amount);
 	}
+	
+	public boolean deposite(String accountNumber, double amount) {
+		return accountDAO.depositeAmount(accountNumber, amount);
+	}
 
 }
