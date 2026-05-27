@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpServer;
 import handler.BalanceHandler;
 import handler.DepositHandler;
 import handler.LoginHandler;
+import handler.TransactionsHandler;
 import handler.WithdrawHandler;
 
 public class Main {
@@ -22,6 +23,8 @@ public class Main {
 		server.createContext("/withdraw", new WithdrawHandler());
 		
 		server.createContext("/deposit", new DepositHandler());
+		
+		server.createContext("/transactions", new TransactionsHandler());
 
 		System.out.println("ATM Server started on port 8080");
 

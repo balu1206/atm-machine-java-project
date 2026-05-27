@@ -3,8 +3,11 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import database.DBConnection;
+import dto.TransactionRecord;
 
 public class AccountDAO {
 	public boolean validateLogin(String accountNumber, String pin) {
@@ -128,6 +131,34 @@ public class AccountDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public List<TransactionRecord> getTransactions(String accountNumber){
+		
+		List<TransactionRecord> transactions = new ArrayList<>();
+		
+		try {
+			Connection connection = DBConnection.getConnection();
+			
+			String query = "SELECT * FROM transactions "+
+							"WHERE account_number = ?"+
+							"ORDER BY created_at DESC";
+			
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			
+			preparedStatement.setString(1, accountNumber);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				TransactionRecord transaction = new TransactionRecord(resultSet.getString("type"), resultSet.getDouble("amount"), resultSet.getString("created_at"));
+				
+				transactions.add(transaction);
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return transactions;
 	}
 
 }

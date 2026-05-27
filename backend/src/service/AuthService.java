@@ -1,6 +1,9 @@
 package service;
 
+import java.util.List;
+
 import dao.AccountDAO;
+import dto.TransactionRecord;
 
 public class AuthService {
 	private AccountDAO accountDAO = new AccountDAO();
@@ -19,6 +22,10 @@ public class AuthService {
 	
 	public boolean deposite(String accountNumber, double amount) {
 		return accountDAO.depositeAmount(accountNumber, amount);
+	}
+	
+	public List<TransactionRecord> getTransactions(String accountNumber){
+		return accountDAO.getTransactions(accountNumber);
 	}
 
 }
