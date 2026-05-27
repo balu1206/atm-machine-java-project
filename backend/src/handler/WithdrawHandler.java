@@ -40,6 +40,7 @@ public class WithdrawHandler implements HttpHandler{
 							"\"Remaining Balance \": "+
 							remainingBalance +
 							" }";
+				
 			} else {
 				response = "{ \"status\": false, " +
 							"\"message\": "+

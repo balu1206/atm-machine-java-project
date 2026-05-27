@@ -69,8 +69,13 @@ public class AccountDAO {
 
 			int rowsUpdated = preparedStatement.executeUpdate();
 
-			return rowsUpdated > 0;
-
+			if( rowsUpdated > 0) {
+				saveTransaction(accountNumber, "WITHDRAW", amount);
+				return true;
+			}
+			
+			return false;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -94,12 +99,35 @@ public class AccountDAO {
 
 			int rowsUpdated = preparedStatement.executeUpdate();
 
-			return rowsUpdated > 0;
+			if( rowsUpdated > 0) {
+				saveTransaction(accountNumber, "DEPOSIT", amount);
+				return true;
+			}
+			return false;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 
+	}
+	
+	public void saveTransaction( String accountNumber, String type, double amount) {
+		try{
+			Connection connection = DBConnection.getConnection();
+			
+			String query = "INSERT INTO transactions " + "(account_number, type, amount) " + "VALUES (? , ? ,?)";
+			
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			
+			preparedStatement.setString(1, accountNumber);
+			preparedStatement.setString(2, type);
+			preparedStatement.setDouble(3, amount);
+			
+			preparedStatement.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
