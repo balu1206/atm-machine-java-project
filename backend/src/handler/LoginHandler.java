@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+import dto.ApiResponse;
 import dto.LoginRequest;
 import service.AuthService;
 public class LoginHandler implements HttpHandler{
@@ -33,13 +34,13 @@ public class LoginHandler implements HttpHandler{
             );
 			
 			if(isValid) {
-				response = "{ \"status\" : true," +
-							"\"message\":"
-									+ "\"Login Successful\"}";
+				ApiResponse apiResponse = new ApiResponse(true, "Login Successful");
+				
+				response = gson.toJson(apiResponse);
 			} else {
-				response = "{ \"status\":false, " +
-							"\"message\":"+
-							"\"Invalid Credentials\" }";
+				ApiResponse apiResponse = new ApiResponse(false, "Invalid Credentials");
+				
+				response = gson.toJson(apiResponse);
 			} 
 			
 		}else {
